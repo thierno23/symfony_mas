@@ -26,7 +26,7 @@ $faker= Factory::create();
         $admin->setUsername($faker->username);
         $admin->setTelephone($faker->phoneNumber);
         $admin->setAdresse($faker->address);
-        $admin->setProfil($this->getReference("cm"));
+        $admin->setProfil($this->getReference("CM"));
         $manager->persist($admin);
         $manager->flush();
     }

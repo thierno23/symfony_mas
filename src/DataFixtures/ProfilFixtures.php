@@ -18,19 +18,7 @@ class ProfilFixtures extends Fixture
             $profil->setLibelle($leProfile);
             $profil->setCode(0);
             $manager->persist($profil);
-
-            if ($leProfile=="ADMIN") {
-                $this->setReference("admin",$profil);
-
-            }else if ($leProfile=="FORMATEUR") {
-                $this->setReference("formateur",$profil);
-            }
-            else if ($leProfile=="CM") {
-                $this->setReference("cm",$profil);
-            }
-            else if ($leProfile=="APPRENANT") {
-                $this->setReference("apprenant",$profil);
-            }
+            $this->setReference($leProfile,$profil);
         }
         
         $manager->flush();
