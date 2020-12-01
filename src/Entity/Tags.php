@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TagsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TagsRepository;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -21,16 +22,18 @@ class Tags
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"Grpstags:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"Grpstags:read"})
      */
     private $libelle;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Groupetags::class, mappedBy="libelle")
+     * @ORM\ManyToMany(targetEntity=Groupetags::class, mappedBy="tag")
      */
     private $groupetags;
 
@@ -38,12 +41,11 @@ class Tags
     {
         $this->groupetags = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
     }
-
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -55,7 +57,6 @@ class Tags
 
         return $this;
     }
-
     /**
      * @return Collection|Groupetags[]
      */
@@ -68,7 +69,7 @@ class Tags
     {
         if (!$this->groupetags->contains($groupetag)) {
             $this->groupetags[] = $groupetag;
-            $groupetag->addLibelle($this);
+            $groupetag->addTag($this);
         }
 
         return $this;
@@ -77,9 +78,11 @@ class Tags
     public function removeGroupetag(Groupetags $groupetag): self
     {
         if ($this->groupetags->removeElement($groupetag)) {
-            $groupetag->removeLibelle($this);
+            $groupetag->removeTag($this);
         }
 
         return $this;
     }
+
+    
 }
