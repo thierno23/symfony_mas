@@ -6,7 +6,7 @@ use App\Entity\Profil;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class GoupesDeCompetencesFixtures extends Fixture
+class GroupesDeCompetencesFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
